@@ -2,6 +2,9 @@
 #define FULL_SPEED 255
 #define HALF_SPEED 123
 
+#define BACKWARD true
+#define FORWARD  false
+
 #define MIN_DISTANCE 2
 #define LOW_DISTANCE 4
 //-------------------------------------------------------------------------------------------------------------------
@@ -90,8 +93,8 @@ float readDistance()
  */
 void backward()
 {
-	runLeftMotor(HALF_SPEED, true);
-	runRightMotor(HALF_SPEED, true);
+	runLeftMotor(HALF_SPEED, BACKWARD);
+	runRightMotor(HALF_SPEED, BACKWARD);
 	is_forward = false;
 }
 
@@ -100,8 +103,8 @@ void backward()
  */
 void turnRight()
 {
-	runLeftMotor(HALF_SPEED, false);
-	runRightMotor(HALF_SPEED, true);
+	runLeftMotor(HALF_SPEED, FORWARD);
+	runRightMotor(HALF_SPEED, BACKWARD);
 	is_forward = false;
 }
 
@@ -110,8 +113,8 @@ void turnRight()
  */
 void turnLeft()
 {
-	runLeftMotor(HALF_SPEED, true);
-	runRightMotor(HALF_SPEED, false);
+	runLeftMotor(HALF_SPEED, BACKWARD);
+	runRightMotor(HALF_SPEED, FORWARD);
 	is_forward = false;
 }
 
@@ -120,8 +123,8 @@ void turnLeft()
  */
 void run()
 {
-	runLeftMotor(FULL_SPEED, false);
-	runRightMotor(FULL_SPEED, false);
+	runLeftMotor(FULL_SPEED, FORWARD);
+	runRightMotor(FULL_SPEED, FORWARD);
 	is_forward = true;
 }
 
@@ -130,8 +133,8 @@ void run()
  */
 void runSlow()
 {
-	runLeftMotor(HALF_SPEED, false);
-	runRightMotor(HALF_SPEED, false);	
+	runLeftMotor(HALF_SPEED, FORWARD);
+	runRightMotor(HALF_SPEED, FORWARD);	
 	is_forward = true;
 }
 
