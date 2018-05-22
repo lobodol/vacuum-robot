@@ -5,19 +5,29 @@
 #define BACKWARD true
 #define FORWARD  false
 
-#define MIN_DISTANCE 2
-#define LOW_DISTANCE 4
+#define MIN_DISTANCE 2000 // Absolute min distance of the robot to an obstacle in mm
+#define LOW_DISTANCE 4000 // Distance of the robot to an obstacle in mm to start decreasing forward speed
+
+#define SOUND_SPEED 340 / 1000
+#define MEASURE_TIMEOUT 10000
 //-------------------------------------------------------------------------------------------------------------------
+// Left motor pins
 int pin_lmot_direction = 12;
 int pin_lmot_brake     = 9;
 int pin_lmot_speed     = 3;
 
+// Right motor pins
 int pin_rmot_direction = 13;
-int pin_rmot_brake = 8;
-int pin_rmot_speed = 11;
+int pin_rmot_brake     = 8;
+int pin_rmot_speed     = 11;
 
-int pin_left_switch = 2;
+// Limit switch pins
+int pin_left_switch  = 2;
 int pin_right_switch = 3;
+
+// Sonar pins
+int pin_trigger = 5;
+int pin_echo    = 6;
 
 float distance;
 int instruction;
@@ -60,7 +70,7 @@ void loop()
 			brakeAll();
 
 			backward();
-			delay(250);
+			delay(125);
 
 			turnRight();
 			delay(500);
@@ -78,14 +88,21 @@ void loop()
 
 
 /**
- * Read the distance of the next obstacle from the sonar.
+ * Read the distance of the next obstacle from the sonar in mm.
  *
  * @return float
  */
 float readDistance()
 {
-	// TODO
-	return 10;
+	digitalWrite(pin_trigger, HIGH);
+	delayMicroseconds(10);
+	digitalWrite(pin_trigger, LOW);
+
+	// Read pulse in µs
+	long measure = pulseIn(pin_echo, HIGH, MEASURE_TIMEOUT);
+
+	// Convert pulse into distance in mm
+	return measure * SOUND_SPEED / 2.0;
 }
 
 /**
@@ -157,8 +174,10 @@ void collisionLeft()
 }
 
 /**
+ * Make left motor turn at given speed in the given direction.
+ *
  * @param int  speed   : Motor speed within [0,255]
- * @param bool reverse : Make motor run forward if TRUE, backward otherwhise
+ * @param bool reverse : Make motor run backward if TRUE, forward otherwhise
  */
 void runLeftMotor(int speed, bool reverse)
 {
@@ -168,6 +187,8 @@ void runLeftMotor(int speed, bool reverse)
 }
 
 /**
+ * Make right motor turn at given speed in the given direction.
+ *
  * @param int  speed   : Motor speed within [0,255]
  * @param bool reverse : Make motor run forward if TRUE, backward otherwhise
  */
