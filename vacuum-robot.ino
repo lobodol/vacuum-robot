@@ -5,8 +5,8 @@
 #define BACKWARD true
 #define FORWARD  false
 
-#define MIN_DISTANCE 2000 // Absolute min distance of the robot to an obstacle in mm
-#define LOW_DISTANCE 4000 // Distance of the robot to an obstacle in mm to start decreasing forward speed
+#define MIN_DISTANCE 20 // Absolute min distance of the robot to an obstacle in mm
+#define LOW_DISTANCE 40 // Distance of the robot to an obstacle in mm to start decreasing forward speed
 
 #define SOUND_SPEED 340 / 1000
 #define MEASURE_TIMEOUT 10000
