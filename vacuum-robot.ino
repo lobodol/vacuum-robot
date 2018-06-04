@@ -50,6 +50,8 @@ void setup()
 
 	pinMode(pin_left_switch, INPUT_PULLUP);
 	pinMode(pin_right_switch, INPUT_PULLUP);
+	
+	pinMode(pin_trigger, OUTPUT);
 
 	attachInterrupt(digitalPinToInterrupt(pin_right_switch), 'collisionRight', FALLING);
 	attachInterrupt(digitalPinToInterrupt(pin_left_switch), 'collisionLeft', FALLING);
